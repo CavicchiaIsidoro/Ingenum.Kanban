@@ -68,9 +68,6 @@ namespace Ingenum.Kaban.Business.Repository
         {
             try
             {
-                //var tmp = await this.context.Boards.ToListAsync();
-                //var list = tmp.ToBoardBusiness();
-                //return list;
                 return this.context.Boards.ToBoardBusiness();
             }
             catch (Exception e)

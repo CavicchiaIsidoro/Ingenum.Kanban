@@ -86,8 +86,6 @@ namespace Ingenum.Kaban.Business.Repository
         /// <returns></returns>
         public IEnumerable<TaskBusiness> GetAllByBoard(int boardId)
         {
-            //return this.context.Tasks.
-            //return this.context.Tasks.Include(b => b.ta)
             return this.context.Tasks.Where(t => t.BoardId == boardId).ToTaskBusiness();
         }
 
