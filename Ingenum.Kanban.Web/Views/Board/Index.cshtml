@@ -1,0 +1,47 @@
+﻿@model IEnumerable<Ingenum.Kanban.Web.Models.BoardViewModel>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Liste des tableaux disponibles</h1>
+
+<p>
+    <a class="btn btn-info" asp-action="Create">Crée un nouveau tableau</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.BoardId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.BoardName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Username)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.BoardId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.BoardName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Username)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.BoardId }) |
+                @Html.ActionLink("Details", "Details", new { id = item.BoardId }, new { @class = "glyphicon glyphicon-pencil"}) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.BoardId })
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

@@ -1,0 +1,110 @@
+﻿@model Ingenum.Kanban.Web.Models.BoardViewModel
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>@Html.DisplayFor(model => model.BoardName)</h1>
+
+<div>
+    <h4>Crée par : @Html.DisplayFor(model => model.Username)</h4>
+    <hr />
+</div>
+<div>
+    <div class="container-fluid pt-3">
+        <h3 class="font-weight-light text-black-50">Kanban Board</h3>
+        <div class="small  text-light">Drag and drop between swim lanes</div>
+        <div class="row flex-row flex-sm-nowrap py-3">
+            <div class="col-sm-6 col-md-4 col-xl-3">
+                <div class="card bg-light">
+                    <div class="card-body" style="border-top: 5px solid red; border-radius: .25em;">
+                        <h6 class="card-title text-uppercase text-truncate py-2">To Do</h6>
+                        <div class="items border border-light">
+                            @foreach (var item in Model.Tasks)
+                            {
+                                if (item.Section == SectionEnum.TODO)
+                                {
+                                    <div class="card draggable shadow-sm" id="cd1" draggable="true" ondragstart="drag(event)">
+                                        <div class="card-body p-2">
+                                            <div class="card-title">
+                                                <img src="//placehold.it/30" class="rounded-circle float-right">
+                                                <a href="" class="lead font-weight-light">@item.Intitule</a>
+                                            </div>
+                                            <p>
+                                                @item.Description
+                                            </p>
+                                            @Html.ActionLink("Modifier", "Edit", "Task", new { taskId = item.TaskId }, new { @class = "btn btn-primary btn-sm" })
+                                        </div>
+                                    </div>
+                                }
+                            }
+                            <div class="dropzone rounded" ondrop="drop(event)" ondragover="allowDrop(event)" ondragleave="clearDrop(event)"> &nbsp; </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6 col-md-4 col-xl-3">
+                <div class="card bg-light">
+                    <div class="card-body" style="border-top: 5px solid yellow; border-radius: .25em;">
+                        <h6 class="card-title text-uppercase text-truncate py-2">DOING</h6>
+                        <div class="items border border-light">
+                            @foreach (var item in Model.Tasks)
+                            {
+                                if (item.Section == SectionEnum.DOING)
+                                {
+                                    <div class="card draggable shadow-sm" id="cd1" draggable="true" ondragstart="drag(event)">
+                                        <div class="card-body p-2">
+                                            <div class="card-title">
+                                                <img src="//placehold.it/30" class="rounded-circle float-right">
+                                                <a href="" class="lead font-weight-light">@item.Intitule</a>
+                                            </div>
+                                            <p>
+                                                @item.Description
+                                            </p>
+                                            @Html.ActionLink("Modifier", "Edit", "Task", new { taskId = item.TaskId }, new { @class = "btn btn-primary btn-sm" })
+                                        </div>
+                                    </div>
+                                }
+                            }
+                            <div class="dropzone rounded" ondrop="drop(event)" ondragover="allowDrop(event)" ondragleave="clearDrop(event)"> &nbsp; </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6 col-md-4 col-xl-3">
+                <div class="card bg-light">
+                    <div class="card-body" style="border-top: 5px solid green; border-radius: .25em;">
+                        <h6 class="card-title text-uppercase text-truncate py-2">DONE</h6>
+                        <div class="items border border-light">
+                            @foreach (var item in Model.Tasks)
+                            {
+                                if (item.Section == SectionEnum.DONE)
+                                {
+                                    <div class="card draggable shadow-sm" id="cd1" draggable="true" ondragstart="drag(event)">
+                                        <div class="card-body p-2">
+                                            <div class="card-title">
+                                                <img src="//placehold.it/30" class="rounded-circle float-right">
+                                                <a href="" class="lead font-weight-light">@item.Intitule</a>
+                                            </div>
+                                            <p>
+                                                @item.Description
+                                            </p>
+                                            @Html.ActionLink("Modifier", "Edit", "Task", new { taskId = item.TaskId }, new { @class = "btn btn-primary btn-sm" })
+                                        </div>
+                                    </div>
+                                }
+                            }
+                            <div class="dropzone rounded" ondrop="drop(event)" ondragover="allowDrop(event)" ondragleave="clearDrop(event)"> &nbsp; </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div>
+    @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
+    @if(!Model.IsLocked)
+        @Html.ActionLink("Créer une tâche", "Create", "Task", new { boardId = Model.BoardId }, new { @class = "glyphicon-lock" }) |
+    <a asp-action="Index">Back to List</a>
+</div>
