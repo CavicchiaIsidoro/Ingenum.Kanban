@@ -44,13 +44,9 @@ namespace Ingenum.Kanban.Api
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILoggerFactory loggerFactory)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            using (var serviceScope = app.ApplicationServices.GetService<IServiceScopeFactory>().CreateScope())
-            {
-                var context = serviceScope.ServiceProvider.GetRequiredService<IngenumKanbanContext>();
-                context.Database.EnsureCreated();
-            }
+            CreateDB(app);            
 
             if (env.IsDevelopment())
             {
@@ -67,6 +63,19 @@ namespace Ingenum.Kanban.Api
             {
                 endpoints.MapControllers();
             });
+        }
+
+        /// <summary>
+        /// Create Database if doesn't exist
+        /// </summary>
+        /// <param name="app"></param>
+        private void CreateDB(IApplicationBuilder app)
+        {
+            using (var serviceScope = app.ApplicationServices.GetService<IServiceScopeFactory>().CreateScope())
+            {
+                var context = serviceScope.ServiceProvider.GetRequiredService<IngenumKanbanContext>();
+                context.Database.EnsureCreated();
+            }
         }
     }
 }

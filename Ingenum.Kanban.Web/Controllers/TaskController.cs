@@ -14,6 +14,7 @@ namespace Ingenum.Kanban.Web.Controllers
 {
     public class TaskController : Controller
     {
+        private readonly string pathApi = "https://localhost:44349/api/Task/";
         // GET: Task
         public ActionResult Index()
         {
@@ -75,7 +76,7 @@ namespace Ingenum.Kanban.Web.Controllers
                 using (var httpClient = new HttpClient())
                 {
                     var json = new StringContent(JsonConvert.SerializeObject(collection), Encoding.UTF8, "application/json");
-                    var response = await httpClient.PostAsync("https://localhost:44349/api/Task", json);
+                    var response = await httpClient.PostAsync(pathApi, json);
 
                 }
                 return RedirectToAction("Index", "Board");
@@ -92,7 +93,7 @@ namespace Ingenum.Kanban.Web.Controllers
             TaskViewModel task = new TaskViewModel();
             using (var httpClient = new HttpClient())
             {
-                using (var response = await httpClient.GetAsync("https://localhost:44349/api/task/" + taskId))
+                using (var response = await httpClient.GetAsync(pathApi + taskId))
                 {
                     string apiResponse = await response.Content.ReadAsStringAsync();
                     task = JsonConvert.DeserializeObject<TaskViewModel>(apiResponse);
@@ -115,7 +116,7 @@ namespace Ingenum.Kanban.Web.Controllers
                 using (var httpClient = new HttpClient())
                 {
                     var json = new StringContent(JsonConvert.SerializeObject(task), Encoding.UTF8, "application/json");
-                    await httpClient.PutAsync("https://localhost:44349/api/task/" + task.TaskId, json);
+                    await httpClient.PutAsync(pathApi + task.TaskId, json);
 
                 }
                 return RedirectToAction("Index", "Board");
@@ -144,7 +145,7 @@ namespace Ingenum.Kanban.Web.Controllers
                 var task = GetTask(id).Result;
                 using (var httpClient = new HttpClient())
                 {
-                    await httpClient.DeleteAsync("https://localhost:44349/api/task/" + id);
+                    await httpClient.DeleteAsync(pathApi + id);
                 }
                 return RedirectToAction(nameof(Index));
             }
@@ -179,7 +180,7 @@ namespace Ingenum.Kanban.Web.Controllers
             TaskViewModel task = new TaskViewModel();
             using (var httpClient = new HttpClient())
             {
-                using (var response = await httpClient.GetAsync("https://localhost:44349/api/task/" + id))
+                using (var response = await httpClient.GetAsync(pathApi + id))
                 {
                     string apiResponse = await response.Content.ReadAsStringAsync();
                     task = JsonConvert.DeserializeObject<TaskViewModel>(apiResponse);

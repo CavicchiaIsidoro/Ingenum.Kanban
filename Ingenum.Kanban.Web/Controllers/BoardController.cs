@@ -13,13 +13,14 @@ namespace Ingenum.Kanban.Web.Controllers
 {
     public class BoardController : Controller
     {
+        private readonly string pathApi = "https://localhost:44349/api/board/";
         // GET: Board
         public async Task<IActionResult> Index()
         {
             List<BoardViewModel> list = new List<BoardViewModel>();
             using (var httpClient = new HttpClient())
             {
-                using (var response = await httpClient.GetAsync("https://localhost:44349/api/board"))
+                using (var response = await httpClient.GetAsync(pathApi))
                 {
                     string apiResponse = await response.Content.ReadAsStringAsync();
                     list = JsonConvert.DeserializeObject<List<BoardViewModel>>(apiResponse);
@@ -54,7 +55,7 @@ namespace Ingenum.Kanban.Web.Controllers
                 using (var httpClient = new HttpClient())
                 {
                     var json = new StringContent(JsonConvert.SerializeObject(collection), Encoding.UTF8, "application/json");
-                    var response = await httpClient.PostAsync("https://localhost:44349/api/Board", json);
+                    var response = await httpClient.PostAsync(pathApi, json);
 
                 }
 
@@ -84,7 +85,7 @@ namespace Ingenum.Kanban.Web.Controllers
                 using (var httpClient = new HttpClient())
                 {
                     var json = new StringContent(JsonConvert.SerializeObject(board), Encoding.UTF8, "application/json");
-                    var response = await httpClient.PutAsync("https://localhost:44349/api/Board/" + board.BoardId, json);
+                    var response = await httpClient.PutAsync(pathApi + board.BoardId, json);
 
                 }
                 return RedirectToAction(nameof(Index));
@@ -112,7 +113,7 @@ namespace Ingenum.Kanban.Web.Controllers
                 // TODO: Add delete logic here
                 using (var httpClient = new HttpClient())
                 {
-                    var response = httpClient.DeleteAsync("https://localhost:44349/api/Board/" + id);
+                    var response = httpClient.DeleteAsync(pathApi + id);
                 }
 
                 return RedirectToAction("Index", "Board");
@@ -128,7 +129,7 @@ namespace Ingenum.Kanban.Web.Controllers
             BoardViewModel model = new BoardViewModel();
             using (var httpClient = new HttpClient())
             {
-                using (var response = await httpClient.GetAsync("https://localhost:44349/api/board/" + id))
+                using (var response = await httpClient.GetAsync(pathApi + id))
                 {
                     string apiResponse = await response.Content.ReadAsStringAsync();
                     model = JsonConvert.DeserializeObject<BoardViewModel>(apiResponse);
