@@ -147,11 +147,13 @@ namespace Ingenum.Kanban.Web.Controllers
             {
                 // TODO: Add delete logic here
                 var task = GetTask(id).Result;
+
                 using (var httpClient = new HttpClient())
                 {
                     await httpClient.DeleteAsync(pathApi + id);
                 }
-                return RedirectToAction(nameof(Index));
+
+                return RedirectToAction("Index", "Board");
             }
             catch
             {

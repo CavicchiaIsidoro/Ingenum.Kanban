@@ -10,6 +10,10 @@
     <h4>Crée par : @Html.DisplayFor(model => model.Username)</h4>
     <hr />
 </div>
+<br />
+@if (!Model.IsLocked)
+    @Html.ActionLink("Créer une tâche", "Create", "Task", new { boardId = Model.BoardId }, new { @class = "btn btn-primary" })
+<br/>
 <div>
     <div class="container-fluid pt-3">
         <h3 class="font-weight-light text-black-50">Kanban Board</h3>
@@ -104,7 +108,5 @@
 </div>
 <div>
     @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
-    @if(!Model.IsLocked)
-        @Html.ActionLink("Créer une tâche", "Create", "Task", new { boardId = Model.BoardId }, new { @class = "glyphicon-lock" }) |
     <a asp-action="Index">Back to List</a>
 </div>
