@@ -15,7 +15,7 @@ namespace Ingenum.Kaban.Business.Repository
 {
     public class TaskReposiroty : IRepository<TaskBusiness>
     {
-        private IngenumKanbanContext context = null;
+        private readonly IngenumKanbanContext context = null;
 
         public TaskReposiroty(IngenumKanbanContext pcc)
         {
@@ -59,8 +59,10 @@ namespace Ingenum.Kaban.Business.Repository
             try
             {
                 var task = this.context.Tasks.FirstOrDefault(t => t.TaskId == entity.TaskId);
+
                 this.context.Remove(task);
                 this.context.SaveChanges();
+
                 return true;
             }
             catch (Exception e)
@@ -113,10 +115,12 @@ namespace Ingenum.Kaban.Business.Repository
             try
             {
                 var task = this.context.Tasks.FirstOrDefault(t => t.TaskId == entity.TaskId);
+
                 task.Description = entity.Description;
                 task.EndDate = entity.EndDate;
                 task.Intitule = entity.Intitule;
                 task.Section = (SectionEnum)VerifySection(entity.Section, task.Section);
+
                 this.context.SaveChanges();
 
                 return true;

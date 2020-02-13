@@ -15,7 +15,7 @@ namespace Ingenum.Kaban.Business.Repository
 {
     public class BoardRepository : IRepository<BoardBusiness>
     {
-        private IngenumKanbanContext context = null;
+        private readonly IngenumKanbanContext context = null;
 
         public BoardRepository(IngenumKanbanContext pcc)
         {
@@ -26,9 +26,12 @@ namespace Ingenum.Kaban.Business.Repository
         {
             try
             {
+                // Board not locked by default
                 entity.IsLocked = false;
+
                 this.context.Boards.Add(entity.ToBoard());
                 this.context.SaveChanges();
+
                 return true;
             }
             catch (Exception e)
@@ -43,6 +46,7 @@ namespace Ingenum.Kaban.Business.Repository
             {
                 this.context.Remove(entity.ToBoard());
                 this.context.SaveChanges();
+
                 return true;
             }
             catch (Exception e)
@@ -59,7 +63,6 @@ namespace Ingenum.Kaban.Business.Repository
             }
             catch (Exception e)
             {
-
                 return null;
             }
         }
@@ -81,7 +84,9 @@ namespace Ingenum.Kaban.Business.Repository
         {
             try
             {
+                // Get tasks for board update
                 var task = this.context.Boards.FirstOrDefault(b => b.BoardId == entity.BoardId);
+
                 task.BoardName = entity.BoardName;
                 task.IsLocked = entity.IsLocked;
                 task.Username = entity.Username;

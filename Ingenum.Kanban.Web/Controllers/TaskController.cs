@@ -8,6 +8,7 @@ using Ingenum.Kanban.Web.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.AspNetCore.Routing;
 using Newtonsoft.Json;
 
 namespace Ingenum.Kanban.Web.Controllers
@@ -73,13 +74,16 @@ namespace Ingenum.Kanban.Web.Controllers
                 }
 
                 collection.Board = board;
+
                 using (var httpClient = new HttpClient())
                 {
                     var json = new StringContent(JsonConvert.SerializeObject(collection), Encoding.UTF8, "application/json");
                     var response = await httpClient.PostAsync(pathApi, json);
 
                 }
-                return RedirectToAction("Index", "Board");
+
+                return RedirectToAction("Details", new RouteValueDictionary(
+                    new { controller = "Board", action = "Details", id = board.BoardId}));
             }
             catch
             {

@@ -25,23 +25,24 @@
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.BoardId)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.BoardName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Username)
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { id = item.BoardId }) |
-                @Html.ActionLink("Details", "Details", new { id = item.BoardId }, new { @class = "glyphicon glyphicon-pencil"}) |
-                @Html.ActionLink("Delete", "Delete", new { id = item.BoardId })
-            </td>
-        </tr>
-}
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.BoardId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.BoardName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Username)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.BoardId }) |
+                    @Html.ActionLink("Details", "Details", new { id = item.BoardId }, new { @class = "glyphicon glyphicon-pencil" })
+                    @*@Html.ActionLink("Delete", "Delete", new { id = item.BoardId })*@
+                </td>
+            </tr>
+        }
     </tbody>
 </table>

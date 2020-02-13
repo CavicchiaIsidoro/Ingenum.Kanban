@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace Ingenum.Kanban.Api.Controllers
 {
     [Route("api/[controller]")]
+    [Produces("application/json")]
     [ApiController]
     public class TaskController : ControllerBase
     {

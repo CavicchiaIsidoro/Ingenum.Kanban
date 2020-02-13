@@ -9,22 +9,19 @@ namespace Ingenum.Kanban.Test
 {
     public class UnitTest1
     {
-        [Fact]
-        public async void Test1()
+        [Theory]
+        [InlineData(1)]
+        public void DeleteTask(int id)
         {
+            // 1. Arrange
             var repo = new TaskReposiroty(new Data.IngenumKanbanContext(new Microsoft.EntityFrameworkCore.DbContextOptions<Data.IngenumKanbanContext>()));
-            TaskBusiness task = new TaskBusiness
-            {
-                Description = "Test",
-                EndDate = DateTime.Now,
-                Intitule = "Test",
-                Section = SectionEnumBusiness.TODO,
-            };
+            var task = repo.Get(id);
 
-            //var result = await repo.AddTest(task);
+            // 2. Act
+            var result = repo.Delete(task);
 
-            //Assert.True(result);
-
+            // 3. Assert
+            Assert.True(result);
         }
     }
 }

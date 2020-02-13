@@ -28,11 +28,9 @@ namespace Ingenum.Kanban.Api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-
-            //services.AddMvc().AddNewtonsoftJson(options => options.SerializerSettings.MaxDepth = null);
-            //services.AddMvc().AddJsonOptions(options => options.JsonSerializerOptions.MaxDepth = 64);
+            
             //For LocalDB use "Local" For SqlServer use "SqlServer"
-            var connectionString = Configuration.GetConnectionString("SqlServer");
+            var connectionString = Configuration.GetConnectionString("Local");
 
             services.AddDbContext<IngenumKanbanContext>(options =>
                 options.UseSqlServer(connectionString, c => c.MigrationsAssembly("Ingenum.Kanban.Data")));
